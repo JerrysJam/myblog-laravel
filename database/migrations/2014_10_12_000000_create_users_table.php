@@ -24,11 +24,10 @@ class CreateUsersTable extends Migration
             $table->integer('question_count')->default(0);
             $table->integer('answers_count')->default(0);
             $table->integer('comments_count')->default(0);
-            $table->integer('comments_count')->default(0);
             $table->integer('likes_count')->default(0);
             $table->integer('follows_count')->default(0);
             $table->integer('following_count')->default(0);
-            $table->json('settings')->nullabel();
+            $table->string('settings');
             $table->rememberToken();
             $table->timestamps();
         });
