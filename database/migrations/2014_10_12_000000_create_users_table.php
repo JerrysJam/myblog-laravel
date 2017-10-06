@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->integer('likes_count')->default(0);
             $table->integer('follows_count')->default(0);
             $table->integer('following_count')->default(0);
-            $table->string('settings');
+            $table->string('settings')->default("");
             $table->rememberToken();
             $table->timestamps();
         });
