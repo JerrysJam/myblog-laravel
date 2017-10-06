@@ -12,6 +12,7 @@ class EmailController extends Controller
         $user = User::where('confirmation_token',$token)->first();
 
         if (is_null($user)){
+            falsh('邮箱验证失败!','danger');
             return redirect('/');
         }
 
@@ -19,6 +20,7 @@ class EmailController extends Controller
         $user->confirmation_token =str_random(40);
         $user->save();
         Auth::login(); // 应该试试 Auth::login($user); 吧
+        falsh('邮箱验证成功!','success');
         return redirect('/home');
     }
 }
