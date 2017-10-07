@@ -16,4 +16,9 @@ class Question extends Model
     {
         return $this->is_hidden;
     }
+
+    public function topics()
+    {
+        return $this->belongsToMany(Topic::class)->withTimestamps();
+    }
 }

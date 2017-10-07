@@ -22,7 +22,9 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('body') ? ' has-error' : '' }}">
-                            <script id="container" name="body" type="text/plain">
+                            <label for="body">描述</label>
+
+                            <script id="container" name="body" style="height:200px" type="text/plain">
                                 {!! old('body') !!}
                             </script>
                             @if ($errors->has('body'))
