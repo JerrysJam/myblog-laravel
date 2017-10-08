@@ -54,7 +54,7 @@ class QuestionsController extends Controller
 //            'body.min' => ' 内容不能少于10个字'
 //        ];
 //        $this->validate($request,$rules,$message);
-        dd($request->get('topics'));
+
         $data = [
             'title' => $request->get('title'),
             'body' => $request->get('body'),
