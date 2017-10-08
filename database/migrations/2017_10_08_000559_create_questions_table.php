@@ -15,10 +15,14 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->text('bio')->nullable;
-            $table->integer('questions_count')->default(0);
-            $table->integer('follows_count')->default(0);
+            $table->string('title');
+            $table->text('body');
+            $table->integer('user_id')->unsigned();
+            $table->integer('comment_count')->default(0);
+            $table->integer('fllowers_count')->default(1);
+            $table->integer('answers_count')->default(0);
+            $table->string('close_comment',8)->default('F');
+            $table->string('is_hidden',8)->default('F');
             $table->timestamps();
         });
     }
