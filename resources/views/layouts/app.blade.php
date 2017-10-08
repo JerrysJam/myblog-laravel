@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -84,11 +84,12 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ mix('js/app.js') }}"></script>
+
+    @yield('js')
+
     <script>
         $('#flash-overlay-modal').modal();
-    </script>
-    <script>
         $('div.alert').not('.alert-important').delay(3000).fadeOut(1000);
     </script>
 </body>
