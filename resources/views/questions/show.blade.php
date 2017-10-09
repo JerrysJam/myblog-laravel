@@ -15,13 +15,13 @@
                     <div class="panel-body">
                        {!! $question->body !!}
                     </div>
+                    <div class="actions">
+                        @if(Auth::check() && Auth::user()->owns($question))
+                            <span class="edit"><a href="/questions/{{ $question->id }}/edit">编辑</a></span>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <style>
-        .panel-body img{
-            width: 100%;
-        }
-    </style>
 @endsection

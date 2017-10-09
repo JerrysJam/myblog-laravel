@@ -36,6 +36,11 @@ class QuestionRepository
         return Question::create($attributes);
     }
 
+    public function byId($id)
+    {
+        return Question::find($id);
+    }
+
     /**
      * @param array $topics
      * @return array
@@ -55,4 +60,6 @@ class QuestionRepository
             return $topicFromDB->id;
         })->toArray();
     }
+
+
 }

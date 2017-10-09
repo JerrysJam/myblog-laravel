@@ -25,5 +25,6 @@ Route::resource('questions','QuestionsController',[
     'name' =>[
         'create' => 'question.create',
         'show' => 'question.show',
+        'edit' => 'question.edit',
     ]
 ]);
