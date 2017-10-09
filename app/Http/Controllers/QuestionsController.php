@@ -37,7 +37,8 @@ class QuestionsController extends Controller
      */
     public function index()
     {
-        return 'index';
+        $questions = $this->questionRepository->getQuestionsFeed();
+        return view('questions.index',compact('questions'));
     }
 
     /**
@@ -139,7 +140,14 @@ class QuestionsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $question = $this->questionRepository->byId($id);
+
+        if(Auth::user()->owns($question)){
+            $question->delete();
+
+            return redirect('/');
+        }
+        abort(403, 'Forbidden');
     }
 
 
