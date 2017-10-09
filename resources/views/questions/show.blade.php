@@ -9,7 +9,7 @@
                     <div class="panel-heading">
                         {{ $question->title }}
                         @foreach($question->topics as $topic)
-                            <span class="topic">{{ $topic->name }}</span>
+                            <a class="topic" href="/topics/{{ $topic->id }}">{{ $topic->name }}</a>
                         @endforeach
                     </div>
                     <div class="panel-body">
