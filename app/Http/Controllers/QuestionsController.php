@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreQuestionRequest;
 use App\Question;
+use App\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -54,13 +55,15 @@ class QuestionsController extends Controller
 //            'body.min' => ' 内容不能少于10个字'
 //        ];
 //        $this->validate($request,$rules,$message);
-
+        $topics = $this->normalize(($request->get('topics')));
         $data = [
             'title' => $request->get('title'),
             'body' => $request->get('body'),
             'user_id' => Auth::id(),
         ];
+
         $question = Question::create($data);
+        $question->topics()->attach($topics);
         return redirect()->route('questions.show',[$question->id]);
     }
 
@@ -72,7 +75,8 @@ class QuestionsController extends Controller
      */
     public function show($id)
     {
-        $question = Question::find($id);
+        $question = Question::where('id',$id)->with('topics')->first();
+        dd($question);
         return view('questions.show',compact('question'));
     }
 
@@ -108,5 +112,21 @@ class QuestionsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function normalize(array $topics)
+    {
+        return collect($topics)->map(function($topic){
+            $topicFromDB = Topic::find($topic);
+            if( $topicFromDB == null ){
+                $newTopic = Topic::create(['name' => $topic , 'questions_count' => 1]);
+                return $newTopic->id;
+            }
+            $topicFromDB->increment('questions_count');
+            if(is_numeric($topic)){
+                return (int)$topic;
+            }
+            return $topicFromDB->id;
+        })->toArray();
     }
 }
