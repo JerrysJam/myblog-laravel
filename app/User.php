@@ -23,15 +23,7 @@ class User extends Authenticatable
         'name', 'email', 'password','avatar','confirmation_token'
     ];
 
-    /**
-     * @param Model $model
-     * @return bool
-     */
-    public function owns(Model $model)
-    {
-        return $this->id == $model->user_id;
-    }    
-    
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -40,4 +32,32 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function question()
+    {
+        return $this->belongsTo(Question::class);
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function answer()
+    {
+        return $this->hasMany(Answer::class);
+    }
+
+    /**
+     * @param Model $model
+     * @return bool
+     */
+    public function owns(Model $model)
+    {
+        return $this->id == $model->user_id;
+    }
+
+
 }
