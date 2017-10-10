@@ -27,6 +27,73 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {{ $question->answers_count }} 个答案
+                    </div>
+                    <div class="panel-body">
+                        @foreach($question->answers as $answer)
+                            <div class="media">
+                                <div class="media-left">
+                                    <img width="48" alt="64x64" src="{{ $question->user->avatar }}" alt="{{ $question->user->name }}">
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">
+
+                                        <a href="/questions/{{ $answer->user->name }}">
+                                            {{ $answer->user->name }}
+                                        </a>
+                                    </h4>
+                                    {!! $answer->body !!}
+                                </div>
+                            </div>
+                        @endforeach
+                        @if(Auth::check())
+                        <form action="/questions/{{ $question->id }}/answer" method="post">
+                            {!! csrf_field() !!}
+                            <div class="form-group{{ $errors->has('body') ? ' has-error' : '' }}">
+                                <script id="container" name="body" style="height:200px" type="text/plain">
+                                    {!! old('body') !!}
+                                </script>
+                                @if ($errors->has('body'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('body') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <button class="btn btn-success pull-right" type="submit">提交答案</button>
+                        </form>
+                        @else
+                            <a href="/login" class="btn btn-success btn-block">想回答请先登录！</a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
+    @section('js')
+
+        <!-- 实例化编辑器 -->
+    <script type="text/javascript">
+        var ue = UE.getEditor('container',{
+            toolbars: [
+                ['bold', 'italic', 'underline', 'strikethrough', 'blockquote', 'insertunorderedlist', 'insertorderedlist', 'justifyleft','justifycenter', 'justifyright',  'link', 'insertimage', 'fullscreen']
+            ],
+            elementPathEnabled: false,
+            enableContextMenu: false,
+            autoClearEmptyNode:true,
+            wordCount:false,
+            imagePopup:false,
+            autotypeset:{ indent: true,imageBlockLine: 'center' }
+        });
+        ue.ready(function() {
+            ue.execCommand('serverparam', '_token', '{{ csrf_token() }}'); // 设置 CSRF token.
+        });
+
+    </script>
+
+    @endsection
+
 @endsection

@@ -9000,7 +9000,7 @@ button.close {
   border-color: #5897fb;
 }
 
-.panel-body img {
+.panel-body.content img {
   width: 100%;
 }
 

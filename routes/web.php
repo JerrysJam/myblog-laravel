@@ -26,3 +26,5 @@ Route::resource('questions','QuestionsController',[
         'edit' => 'question.edit',
     ]
 ]);
+
+Route::post('questions/{question}/answer','AnswersController@store');
