@@ -23,3 +23,26 @@ Route::middleware('api')->get('/topics', function (Request $request) {
         ->get();
     return $topics;
 });
+
+//session 对于 auth:api 总是401  
+Route::middleware('api')->post('/question/follower', function (Request $request) {
+    $follow = \App\Follow::where('question_id',$request->get('question'))
+                            ->where('user_id',$request->get('user'))
+                            ->count();
+    return $follow ? response()->json(['followed' => true]): response()->json(['followed' => false]);
+});
+
+Route::middleware('api')->post('/question/follow', function (Request $request) {
+    $follow = \App\Follow::where('question_id',$request->get('question'))
+        ->where('user_id',$request->get('user'))
+        ->first();
+    if($follow != null){
+        $follow->delete();
+        return response()->json(['followed' => false]);
+    }
+    \App\Follow::create([
+        'question_id' => $request->get('question'),
+        'user_id' => $request->get('user')
+    ]);
+    return response()->json(['followed' => true]);
+});
