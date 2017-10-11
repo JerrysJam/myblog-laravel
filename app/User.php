@@ -59,5 +59,17 @@ class User extends Authenticatable
         return $this->id == $model->user_id;
     }
 
+    /**
+     * @param $question
+     * @return array
+     */
+    public function follows($question)
+    {
+        return Follow::create([
+            'question_id' => $question,
+            'user_id' => $this->id
+        ]);
+    }
+
 
 }
