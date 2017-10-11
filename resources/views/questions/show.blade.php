@@ -35,8 +35,8 @@
                         <span>关注者</span>
                     </div>
                     <div class="panel-body">
-                        <a href="/questions/{{$question->id}}/follow" class="btn btn-default">
-                            关注改问题
+                        <a href="/questions/{{$question->id}}/follow" class="btn btn-default {{ Auth::user()->followed($question->id)? 'btn-success' : '' }}">
+                            {{ Auth::user()->followed($question->id)? '已关注' : '关注' }}
                         </a>
                         <a href="#editor" class="btn btn-primary">撰写答案</a>
                     </div>
@@ -66,7 +66,7 @@
                             </div>
                         @endforeach
                         @if(Auth::check())
-                        <form action="/questions/{{ $question->id }}/answer" method="post">
+                        <form id="editor" action="/questions/{{ $question->id }}/answer" method="post">
                             {!! csrf_field() !!}
                             <div class="form-group{{ $errors->has('body') ? ' has-error' : '' }}">
                                 <script id="container" name="body" style="height:200px" type="text/plain">
@@ -81,7 +81,7 @@
                             <button class="btn btn-success pull-right" type="submit">提交答案</button>
                         </form>
                         @else
-                            <a href="/login" class="btn btn-success btn-block">想回答请先登录！</a>
+                            <a href="/login" id="editor" class="btn btn-success btn-block">想回答请先登录！</a>
                         @endif
                     </div>
                 </div>
