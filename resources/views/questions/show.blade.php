@@ -31,7 +31,7 @@
             <div class="col-md-3">
                 <div class="panel panel-default">
                     <div class="panel-heading question-follow">
-                        <h2>{{ $question->follwers_count }}</h2>
+                        <h2>{{ $question->followers_count }}</h2>
                         <span>关注者</span>
                     </div>
                     <div class="panel-body">
@@ -84,6 +84,46 @@
                         @else
                             <a href="/login" id="editor" class="btn btn-success btn-block">想回答请先登录！</a>
                         @endif
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading question-follow">
+                        <h5>关于作者</h5>
+                    </div>
+                    <div class="panel-body">
+                        <div class="media">
+                            <div class="media-left">
+                                <a href="#">
+                                    <img height="36" width="36" src="{{ $question->user->avatar }}" alt="{{ $question->user->avatar }}">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">
+                                    <a href="">
+                                        {{ $question->user->name }}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div class="user-statics" >
+                                <div class="statics-item text-center">
+                                    <div class="statics-text">问题</div>
+                                    <div class="statics-count">{{ $question->user->questions_count }}</div>
+                                </div>
+                                <div class="statics-item text-center">
+                                    <div class="statics-text">回答</div>
+                                    <div class="statics-count">{{ $question->user->answers_count }}</div>
+                                </div>
+                                <div class="statics-item text-center">
+                                    <div class="statics-text">关注者</div>
+                                    <div class="statics-count">{{ $question->user->followers_count }}</div>
+                                </div>
+                            </div>
+                            <user-follow-button question="{{ $question->id }}" user="{{ Auth::id() }}"></user-follow-button>
+                            <a href="#" class="btn btn-primary">发送私信</a>
+                        </div>
+                       
                     </div>
                 </div>
             </div>
