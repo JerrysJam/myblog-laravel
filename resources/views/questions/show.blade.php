@@ -38,7 +38,7 @@
                         {{--<a href="/questions/{{$question->id}}/follow" class="btn btn-default {{ Auth::user()->followed($question->id)? 'btn-success' : '' }}">--}}
                             {{--{{ Auth::user()->followed($question->id)? '已关注' : '关注' }}--}}
                         {{--</a>--}}
-                        <question-follow-button question="{{ $question->id }}" user="{{ Auth::id() }}"></question-follow-button>
+                        <question-follow-button question="{{ $question->id }}"></question-follow-button>
                         <a href="#editor" class="btn btn-primary">撰写答案</a>
                     </div>
                 </div>
@@ -120,8 +120,8 @@
                                     <div class="statics-count">{{ $question->user->followers_count }}</div>
                                 </div>
                             </div>
-                            <user-follow-button question="{{ $question->id }}" user="{{ Auth::id() }}"></user-follow-button>
-                            <a href="#" class="btn btn-primary">发送私信</a>
+                            <user-follow-button user="{{ $question->user_id }}"></user-follow-button>
+                            <button href="#" class="btn  btn-primary">发送私信</button>
                         </div>
                        
                     </div>

@@ -1,21 +1,19 @@
 <template>
     <button
-        class="btn btn-default"
-        v-bind:class="{ 'btn-success' : followed}"
-        v-text="text"
-        v-on:click="follow"
+            class="btn btn-default"
+            v-bind:class="{ 'btn-success' : followed}"
+            v-text="text"
+            v-on:click="follow"
     ></button>
 </template>
 
 <script>
     export default {
         props:[
-            'question'
+            'user'
         ],
         mounted(){
-//            this.$http.post('/api/question/follower',{'question':this.question,'user':this.user}).then(response=>{
-//              5.4用axios.post
-            axios.post('/api/question/follower',{'question':this.question}).then(response=>{
+            axios.get('/api/user/'+ this.user + '/followers' ).then(response=>{
                 console.log(response.data);
                 this.followed = response.data.followed;
             })
@@ -27,12 +25,12 @@
         },
         computed:{
             text(){
-                return this.followed ? '已关注' : '关注该问题'
+                return this.followed ? '已关注' : '关注他'
             }
         },
         methods:{
             follow(){
-                axios.post('/api/question/follow',{'question':this.question}).then(response=>{
+                axios.post('/api/user/follow',{'user':this.user}).then(response=>{
                     console.log(response.data);
                     this.followed = response.data.followed;
                 })
