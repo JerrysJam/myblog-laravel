@@ -24,25 +24,46 @@ Route::middleware('api')->get('/topics', function (Request $request) {
     return $topics;
 });
 
-//session 对于 auth:api 总是401  
-Route::middleware('api')->post('/question/follower', function (Request $request) {
+//session 不起作用 对于 auth:api 总是401
+Route::middleware('auth:api')->post('/question/follower', function (Request $request) {
+    $user = Auth::guard('api')->user();
     $follow = \App\Follow::where('question_id',$request->get('question'))
-                            ->where('user_id',$request->get('user'))
+                            ->where('user_id',$user->id)
                             ->count();
+//    $follow = $user->follows($request->get('question'));
+
     return $follow ? response()->json(['followed' => true]): response()->json(['followed' => false]);
 });
 
-Route::middleware('api')->post('/question/follow', function (Request $request) {
-    $follow = \App\Follow::where('question_id',$request->get('question'))
-        ->where('user_id',$request->get('user'))
-        ->first();
-    if($follow != null){
-        $follow->delete();
+Route::middleware('auth:api')->post('/question/follow', function (Request $request) {
+//    版本2
+    $user = Auth::guard('api')->user();
+    $question = \App\Question::find($request->get('question'));
+    $followed = $user->followThis($question->id);
+    if(count($followed['detached']) > 0){
+        $question->decrement('followers_count');
         return response()->json(['followed' => false]);
     }
-    \App\Follow::create([
-        'question_id' => $request->get('question'),
-        'user_id' => $request->get('user')
-    ]);
-    return response()->json(['followed' => true]);
+//    两个if增加代码可读性
+    if(count($followed['attached']) > 0){
+        $question->increment('followers_count');
+        return response()->json(['followed' => true]);
+    }
+
+//     版本1
+//    $user = Auth::guard('api')->user();
+//    $question = \App\Question::find($request->get('question'));
+//    $followed = \App\Follow::where('question_id',$question->id)
+//        ->where('user_id',$user->id)
+//        ->first();
+//    if($followed !== null){
+//        $question->decrement('followers_count');
+//        $followed->delete();
+//        return response()->json(['followed' => false]);
+//    }else {
+//        $user->followThis($question->id);
+//        $question->increment('followers_count');
+//        return response()->json(['followed' => true]);
+//    }
+
 });

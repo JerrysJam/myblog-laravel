@@ -16,7 +16,7 @@
 //            this.$http.post('/api/question/follower',{'question':this.question,'user':this.user}).then(response=>{
 //              5.4用axios.post
             axios.post('/api/question/follower',{'question':this.question,'user':this.user}).then(response=>{
-//                console.log(response.data);
+                console.log(response.data);
                 this.followed = response.data.followed;
             })
         },
@@ -33,6 +33,7 @@
         methods:{
             follow(){
                 axios.post('/api/question/follow',{'question':this.question,'user':this.user}).then(response=>{
+                    console.log(response.data);
                     this.followed = response.data.followed;
                 })
             }

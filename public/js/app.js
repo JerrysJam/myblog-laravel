@@ -1668,7 +1668,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //            this.$http.post('/api/question/follower',{'question':this.question,'user':this.user}).then(response=>{
         //              5.4用axios.post
         axios.post('/api/question/follower', { 'question': this.question, 'user': this.user }).then(function (response) {
-            //                console.log(response.data);
+            console.log(response.data);
             _this.followed = response.data.followed;
         });
     },
@@ -1688,6 +1688,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             axios.post('/api/question/follow', { 'question': this.question, 'user': this.user }).then(function (response) {
+                console.log(response.data);
                 _this2.followed = response.data.followed;
             });
         }
@@ -42144,10 +42145,20 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * a simple convenience so we don't have to attach every token manually.
  */
 
+//let token = document.head.querySelector('meta[name="csrf-token"]');
+//
+//if (token) {
+//    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+//} else {
+//    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+//}
+
 var token = document.head.querySelector('meta[name="csrf-token"]');
+var apiToken = document.head.querySelector('meta[name="apiToken"]');
 
 if (token) {
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+  window.axios.defaults.headers.common['Authorization'] = apiToken.content;
 } else {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
