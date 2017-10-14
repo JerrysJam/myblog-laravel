@@ -13,7 +13,7 @@ class CreateFollowersTable extends Migration
      */
     public function up()
     {
-        Schema::create('follower', function (Blueprint $table) {
+        Schema::create('followers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('follower_id')->unsinged()->index();
             $table->integer('followed_id')->unsinged()->index();
