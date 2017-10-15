@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Mailer\UserMailer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -87,5 +88,10 @@ class User extends Authenticatable
     public function followThisUser($user)
     {
         return $this->followers()->toggle($user);
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        (new UserMailer())->passwordReset($this->email, $token);
     }
 }
