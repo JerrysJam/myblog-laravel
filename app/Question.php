@@ -37,8 +37,14 @@ class Question extends Model
         return $this->belongsToMany(User::class,'user_question')->withTimestamps();
     }
 
+    public function comments()
+    {
+        return $this->morphMany('App\comment','commentable');
+    }
+
     public function scopePublished($query)
     {
         return $query->where('is_hidden','F');
     }
+
 }
