@@ -39,7 +39,7 @@
                             {{--{{ Auth::user()->followed($question->id)? '已关注' : '关注' }}--}}
                         {{--</a>--}}
                         <question-follow-button question="{{ $question->id }}"></question-follow-button>
-                        <a href="#editor" class="btn btn-primary">撰写答案</a>
+                        <a href="#editor" class="btn btn-primary  pull-right">撰写答案</a>
                     </div>
                 </div>
             </div>
@@ -121,7 +121,7 @@
                                 </div>
                             </div>
                             <user-follow-button user="{{ $question->user_id }}"></user-follow-button>
-                            <button href="#" class="btn  btn-primary">发送私信</button>
+                            <send-message-button user="{{ $question->user_id }}"></send-message-button>
                         </div>
                        
                     </div>
