@@ -1747,6 +1747,57 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/UserVoteButton.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['answer', 'count'],
+    mounted: function mounted() {
+        var _this = this;
+
+        axios.get('/api/answer/' + this.answer + '/votes/users').then(function (response) {
+            console.log(response.data);
+            _this.voted = response.data.voted;
+        });
+    },
+    data: function data() {
+        return {
+            voted: false
+        };
+    },
+
+    computed: {
+        text: function text() {
+            return this.count;
+        }
+    },
+    methods: {
+        Voted: function Voted() {
+            var _this2 = this;
+
+            axios.post('/api/answer/vote', { 'answer': this.answer }).then(function (response) {
+                console.log(response.data);
+                _this2.voted = response.data.voted;
+                response.data.voted ? _this2.count++ : _this2.count--;
+            });
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/bootstrap-sass/assets/javascripts/bootstrap.js":
 /***/ (function(module, exports) {
 
@@ -31828,6 +31879,32 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-590658f5\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/UserVoteButton.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("button", {
+    staticClass: "btn btn-default",
+    class: { "btn-primary": _vm.voted },
+    domProps: { textContent: _vm._s(_vm.text) },
+    on: { click: _vm.Voted }
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-590658f5", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-741d2a68\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/Example.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -42179,6 +42256,7 @@ window.Vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 Vue.component('example', __webpack_require__("./resources/assets/js/components/Example.vue"));
 Vue.component('question-follow-button', __webpack_require__("./resources/assets/js/components/QuestionFollowButton.vue"));
 Vue.component('user-follow-button', __webpack_require__("./resources/assets/js/components/UserFollowButton.vue"));
+Vue.component('user-vote-button', __webpack_require__("./resources/assets/js/components/UserVoteButton.vue"));
 
 var app = new Vue({
   el: '#app'
@@ -42387,6 +42465,53 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-b91b5e88", Component.options)
   } else {
     hotAPI.reload("data-v-b91b5e88", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/UserVoteButton.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/UserVoteButton.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-590658f5\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/UserVoteButton.vue")
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/UserVoteButton.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] UserVoteButton.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-590658f5", Component.options)
+  } else {
+    hotAPI.reload("data-v-590658f5", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

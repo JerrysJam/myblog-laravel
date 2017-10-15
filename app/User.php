@@ -90,8 +90,25 @@ class User extends Authenticatable
         return $this->followers()->toggle($user);
     }
 
+    public function votes()
+    {
+        return $this->belongsToMany(Answer::class,'votes')->withTimestamps();
+    }
+
+    public function voteFor($answer)
+    {
+        return $this->votes()->toggle($answer);
+    }
+
+    public function hasVotedFor($answer_id)
+    {
+        return !!$this->votes()->where('answer_id',$answer_id)->count();
+    }
+    
     public function sendPasswordResetNotification($token)
     {
         (new UserMailer())->passwordReset($this->email, $token);
     }
+
+
 }
