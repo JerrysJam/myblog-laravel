@@ -26,7 +26,6 @@ class UserMailer extends Mailer
     {
         $data = [
             'url' => url('password/reset',$token),
-            'name' => Auth::guard('api')->user()->name,
         ];
         $this->sendTo('zhihu_app_reset_password', $email, $data);
     }
