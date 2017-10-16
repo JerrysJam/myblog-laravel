@@ -24,6 +24,11 @@
                                 <button class="button is-naked delete-button">删除</button>
                             </form>
                         @endif
+                        <comments type="question"
+                                  model="{{ $question->id }}"
+                                  count="{{ $question->comments()->count() }}"
+                        >
+                        </comments>
                     </div>
                 </div>
             </div>
@@ -64,6 +69,11 @@
                                     </h4>
                                     {!! $answer->body !!}
                                 </div>
+                                <comments type="answer"
+                                          model="{{ $answer->id }}"
+                                          count="{{ $answer->comments()->count()}}"
+                                >
+                                </comments>
                             </div>
                         @endforeach
                         @if(Auth::check())
@@ -96,7 +106,7 @@
                         <div class="media">
                             <div class="media-left">
                                 <a href="#">
-                                    <img height="36" width="36" src="{{ $question->user->avatar }}" alt="{{ $question->user->avatar }}">
+                                    <img class="img-circle" height="36" width="36" src="{{ $question->user->avatar }}" alt="{{ $question->user->avatar }}">
                                 </a>
                             </div>
                             <div class="media-body">
@@ -121,7 +131,7 @@
                                 </div>
                             </div>
                             <user-follow-button user="{{ $question->user_id }}"></user-follow-button>
-                            <send-message-button user="{{ $question->user_id }}"></send-message-button>
+                            <send-message user="{{ $question->user_id }}"></send-message>
                         </div>
                        
                     </div>

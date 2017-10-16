@@ -50,6 +50,17 @@ class QuestionRepository
         return Question::published()->latest('updated_at')->with('user')->get();
     }
 
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getQuestionCommentsById($id)
+    {
+        $question = Question::with('comments','comments.user')->where('id',$id)->first();
+        return $question->comments;
+    }
+
     /**
      * @param array $topics
      * @return array
